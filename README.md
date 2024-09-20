@@ -4,30 +4,86 @@
 
 ## Фолдер бэлдэх
 
-app үүсгэсэн
+1. Project үүсгэсэх
 
 ```
 composer create-project laravel/laravel firstapp
 
 ```
 
-3. Өгөгдлийн баазтай холбох
-.env
- 
-4. Нэвтрэх, хамгаалалт
- 
+2. Өгөгдлийн баазтай холбох
+
+Өгөгдлийн баазтай холбохын тулд **.env** файлд өөрчлөлт оруулна.
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=myproj
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+3. Нэвтрэх, хамгаалалтын тохиргоо хийх
+
+``` 
 composer require laravel/breeze --dev
 php artisan breeze:install
- 
-5. Модел болон migration-ийг үүсгэх
+```
+
+
+4. Модел болон migration-ийг үүсгэх
  
 
+```
 php artisan make:model Stat -m
 php artisan make:model Teacher -m
 php artisan make:model Course -m
 php artisan make:model Student -m
 php artisan make:model Attendance -m
- 
+```
+
+### Stat migration
+
+```
+    $table->id();
+    $table->string('name');
+    $table->string('abr');
+```
+
+### Teacher migration
+
+```
+    $table->id();
+    $table->string('firstName');
+    $table->string('lastName');
+    $table->string('gender');
+    $table->string('phoneNumber');
+```
+
+### Student migration
+
+``` $table->id();
+    $table->unsignedBigInteger('course_id')->index();
+    $table->string('firstName');
+    $table->string('lastName');
+    $table->string('gender');
+    $table->string('phoneNumber');
+    $table->string('RD');
+
+  $table->foreign('course_id')->references('id')->on('courses')->cascadeOnDelete();
+```
+
+### Course migration
+
+```
+```
+
+### Attendance migration
+
+```
+```
+
 6. Бааз руу хүснэгт үүсгэх
  
 php artisan migrate
